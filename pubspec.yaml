@@ -2,6 +2,8 @@ name: a0001_easy_image_picker
 description: "Easy to Use Image Picker using [Provider, GetX, BLoC] You can pick Image...."
 version: 0.0.1
 homepage:
+repository: https://github.com/MrManavRamani-Flutter/A0001_Easy_ImagePicker_Package
+author: Manav Ramani <manavpatel13402003@gmail.com>
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
