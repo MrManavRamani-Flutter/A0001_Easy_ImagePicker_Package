@@ -329,7 +329,7 @@ class MyHomeScreen extends StatelessWidget {
 ## iOS
 ### Add the following keys to your Info.plist file:
 
-```Info.plist
+```Info
 <key>NSCameraUsageDescription</key>
 <string>We need access to your camera to take pictures</string>
 <key>NSPhotoLibraryUsageDescription</key>
