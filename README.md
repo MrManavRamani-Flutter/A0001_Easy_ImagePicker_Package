@@ -206,28 +206,28 @@ class ImagePickerWidget extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+        children: [
           Obx(() {
-            return imagePickerController.selectedImage.value == null
-                ? Text('No image selected')
+            return imagePickerController.selectedImagePath.value.isEmpty
+                ? const Text('No image selected')
                 : Image.file(
-                    imagePickerController.selectedImage.value!.pathFile!,
-                    width: 200,
-                    height: 200,
-                  );
+              File(imagePickerController.selectedImagePath.value),
+              width: 200,
+              height: 200,
+            );
           }),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              imagePickerController.pickImage(ImageSource.camera);
+              _pickImage(ImageSource.camera);
             },
-            child: Text('Pick Image from Camera'),
+            child: const Text('Pick Image from Camera'),
           ),
           ElevatedButton(
             onPressed: () {
-              imagePickerController.pickImage(ImageSource.gallery);
+              _pickImage(ImageSource.gallery);
             },
-            child: Text('Pick Image from Gallery'),
+            child: const Text('Pick Image from Gallery'),
           ),
         ],
       ),
@@ -244,11 +244,11 @@ class ImagePickerWidget extends StatelessWidget {
 
 ```dart
 // main.dart
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:image_picker_getx/image_picker_controller.dart';
 import 'dart:io';
-
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:a0001_easy_image_picker/a0001_easy_image_picker.dart';
 void main() {
   runApp(MyApp());
 }
@@ -261,46 +261,53 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('Image Picker using GetX Package'),
         ),
-        body: ImagePickerWidget(),
+        body: MyHomeScreen(),
       ),
     );
   }
 }
 
-class ImagePickerWidget extends StatelessWidget {
-  final ImagePickerController imagePickerController = Get.put(ImagePickerController());
+class MyHomeScreen extends StatelessWidget {
+  MyHomeScreen({super.key});
+
+  final ImagePickerController imagePickerController =
+  Get.put(ImagePickerController());
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Obx(() {
-            return imagePickerController.selectedImage.value == null
-                ? Text('No image selected')
-                : Image.file(
-                    imagePickerController.selectedImage.value!.pathFile!,
-                    width: 200,
-                    height: 200,
-                  );
-          }),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              imagePickerController.pickImage(ImageSource.camera);
-            },
-            child: Text('Pick Image from Camera'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              imagePickerController.pickImage(ImageSource.gallery);
-            },
-            child: Text('Pick Image from Gallery'),
-          ),
-        ],
-      ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Obx(() {
+              return imagePickerController.selectedImagePath.value.isEmpty
+                  ? const Text('No image selected')
+                  : Image.file(
+                File(imagePickerController.selectedImagePath.value),
+                width: 200,
+                height: 200,
+              );
+            }),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                _pickImage(ImageSource.camera);
+              },
+              child: const Text('Pick Image from Camera'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _pickImage(ImageSource.gallery);
+              },
+              child: const Text('Pick Image from Gallery'),
+            ),
+          ],
+        ),
     );
+  }
+
+  void _pickImage(ImageSource source) {
+    imagePickerController.pickImage(source);
   }
 }
 
