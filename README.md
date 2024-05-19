@@ -36,16 +36,8 @@ dependencies:
 To start using the `ImagePickerProvider` in your Flutter app, you need to initialize it in the main file (`main.dart`). This step ensures that the provider is available throughout your app.
     
 ```dart
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/image_picker_provider.dart'; // Import the ImagePickerProvider
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +49,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Image Picker User Package',
-        routes: {
-          // list your routes 
-        },
+        // Your Code
       ),
     );
   }
@@ -78,11 +66,36 @@ void _pickImage(BuildContext context) {
 void _takePhoto(BuildContext context) {
   context.read<ImagePickerProvider>().takeImage();
 }
-
 ```
 
 ## Example :
 
+
+#### MyApp.dart
+```dart
+import 'package:a0001_easy_image_picker/a0001_easy_image_picker.dart';  // Import this for ImagePickerProvider
+import 'package:provider/provider.dart';
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ImagePickerProvider(),
+        ),
+      ],
+      child: MaterialApp(
+      // Your Code Here
+      ),
+    );
+  }
+}
+```
+
+#### MyHomeScree.dart
 ```dart
 import 'dart:io';
 import 'package:flutter/material.dart';
