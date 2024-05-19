@@ -10,7 +10,7 @@ A Flutter package for picking images using Provider, GetX, and BLoC.
 ## Usage
 
 ### Using Provider
-## main.dart
+#### main.dart
 ``` dart 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
