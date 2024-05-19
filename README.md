@@ -17,7 +17,6 @@ dependencies:
     git:
       url: https://github.com/your_username/my_image_picker.git
 
-
 Then, run flutter pub get to install the package.
 
 ## Usage
