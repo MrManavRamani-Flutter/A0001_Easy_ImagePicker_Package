@@ -37,7 +37,7 @@ To start using the `ImagePickerProvider` in your Flutter app, you need to initia
     
 ```dart
 import 'package:provider/provider.dart';
-import 'providers/image_picker_provider.dart'; // Import the ImagePickerProvider
+import 'package:a0001_easy_image_picker/a0001_easy_image_picker.dart';  // Import this for ImagePickerProvider
 
   @override
   Widget build(BuildContext context) {
@@ -146,4 +146,186 @@ class MyHomeScreen extends StatelessWidget {
     context.read<ImagePickerProvider>().takeImage();
   }
 }
+```
+
+##
+
+## image_picker_getx
+
+A Flutter package for picking images from the gallery or camera using GetX for state management. This package simplifies image picking and state management, providing an `ImagePickerController` and an `ImageModel`.
+
+### Installation
+
+#### Add the following dependencies to your `pubspec.yaml` to include this package directly from GitHub:
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  get: ^4.6.5
+  image_picker: ^0.8.5+3
+  image_picker_getx:
+    git:
+      url: https://github.com/YOUR_GITHUB_USERNAME/image_picker_getx.git
+      ref: main
+```
+
+## Usage
+
+### Step 1: Import the Package
+
+#### Import the necessary files in your Dart code.
+
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker_getx/image_picker_controller.dart';
+import 'dart:io';
+
+```
+
+### Step 2: Initialize the Controller
+#### Create an instance of ImagePickerController using GetX.
+
+```dart
+final ImagePickerController imagePickerController = Get.put(ImagePickerController());
+
+```
+
+
+### Step 3: Use the Controller in Your Widget
+#### Use the ImagePickerController to pick images and observe changes in the UI.
+
+```dart
+class ImagePickerWidget extends StatelessWidget {
+  final ImagePickerController imagePickerController = Get.put(ImagePickerController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Obx(() {
+            return imagePickerController.selectedImage.value == null
+                ? Text('No image selected')
+                : Image.file(
+                    imagePickerController.selectedImage.value!.pathFile!,
+                    width: 200,
+                    height: 200,
+                  );
+          }),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              imagePickerController.pickImage(ImageSource.camera);
+            },
+            child: Text('Pick Image from Camera'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              imagePickerController.pickImage(ImageSource.gallery);
+            },
+            child: Text('Pick Image from Gallery'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+```
+
+
+## Full Example
+#### Here is a complete example to get you started:
+
+
+```dart
+// main.dart
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker_getx/image_picker_controller.dart';
+import 'dart:io';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Image Picker using GetX Package'),
+        ),
+        body: ImagePickerWidget(),
+      ),
+    );
+  }
+}
+
+class ImagePickerWidget extends StatelessWidget {
+  final ImagePickerController imagePickerController = Get.put(ImagePickerController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Obx(() {
+            return imagePickerController.selectedImage.value == null
+                ? Text('No image selected')
+                : Image.file(
+                    imagePickerController.selectedImage.value!.pathFile!,
+                    width: 200,
+                    height: 200,
+                  );
+          }),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              imagePickerController.pickImage(ImageSource.camera);
+            },
+            child: Text('Pick Image from Camera'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              imagePickerController.pickImage(ImageSource.gallery);
+            },
+            child: Text('Pick Image from Gallery'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+```
+
+
+## Additional Configuration
+
+## Android
+### Add the following permissions to your AndroidManifest.xml:
+
+```manifest
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+```
+
+## iOS
+### Add the following keys to your Info.plist file:
+
+```Info.plist
+<key>NSCameraUsageDescription</key>
+<string>We need access to your camera to take pictures</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library to select pictures</string>
+
 ```

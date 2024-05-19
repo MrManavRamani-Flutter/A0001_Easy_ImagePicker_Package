@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../a0001_easy_image_picker.dart';
+import '../../a0001_easy_image_picker.dart';
 
 class ImagePickerProvider extends ChangeNotifier {
   ImageModel? _selectedImage;
