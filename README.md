@@ -166,8 +166,8 @@ dependencies:
   image_picker: ^0.8.5+3
   image_picker_getx:
     git:
-      url: https://github.com/YOUR_GITHUB_USERNAME/image_picker_getx.git
-      ref: main
+      url: https://github.com/MrManavRamani-Flutter/A0001_Easy_ImagePicker_Package.git
+      ref: master
 ```
 
 ## Usage
