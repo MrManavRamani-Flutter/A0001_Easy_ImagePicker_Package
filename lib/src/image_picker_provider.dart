@@ -16,9 +16,9 @@ class ImagePickerProvider extends ChangeNotifier {
       notifyListeners(); // Notify listeners when the image is picked
     }
   }
-  //add pickPhoto
 
-  Future<void> takePhoto() async {
+  //add takeImage
+  Future<void> takeImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
