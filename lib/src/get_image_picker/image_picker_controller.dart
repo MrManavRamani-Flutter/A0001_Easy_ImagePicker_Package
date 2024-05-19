@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'image_model.dart';
+import '../models/image_model.dart';
 
 class ImagePickerController extends GetxController {
   var imageModel = Rx<ImageModel?>(null);
