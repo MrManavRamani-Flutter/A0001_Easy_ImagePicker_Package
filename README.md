@@ -15,7 +15,7 @@ Add the following to your `pubspec.yaml` file:
 dependencies:
   my_image_picker:
     git:
-      url: https://github.com/your_username/my_image_picker.git
+      url: https://github.com/MrManavRamani-Flutter/A0001_Easy_ImagePicker_Package.git
 
 Then, run flutter pub get to install the package.
 
@@ -23,15 +23,15 @@ Then, run flutter pub get to install the package.
 ### Using Provider
 
 #### 1. Import the package
-'''dart
+```dart
 import 'package:image_picker_provider/image_picker_provider.dart';
 
 #### 2. Instantiate the provider
-'''dart
+```dart
 ImagePickerProvider imagePickerProvider = ImagePickerProvider();
 
 #### 3. Pick an image
-'''dart
+```dart
 // Pick from gallery
 await imagePickerProvider.pickImage(ImageSource.gallery);
 
@@ -39,11 +39,11 @@ await imagePickerProvider.pickImage(ImageSource.gallery);
 await imagePickerProvider.pickImage(ImageSource.camera);
 
 #### 4. Access the picked image
-'''dart
+```dart
 ImageModel? pickedImage = imagePickerProvider.imageModel;
 
 ### Example
-'''dart
+```dart
 
 import 'package:flutter/material.dart';
 import 'package:image_picker_provider/image_picker_provider.dart';
