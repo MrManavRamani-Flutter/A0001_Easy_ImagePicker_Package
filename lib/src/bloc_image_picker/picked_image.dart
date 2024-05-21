@@ -1,3 +1,5 @@
+// lib/src/bloc_image_picker/picked_image.dart
+
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';

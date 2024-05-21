@@ -1,11 +1,13 @@
+// lib/src/bloc/image_picker_bloc.dart
+
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../a0001_easy_image_picker.dart';
+import '../bloc_image_picker/image_picker_repository.dart';
+import '../bloc_image_picker/picked_image.dart';
 
-// Events
 abstract class ImageEvent {}
 
 class PickImageEvent extends ImageEvent {
@@ -14,7 +16,6 @@ class PickImageEvent extends ImageEvent {
   PickImageEvent(this.source);
 }
 
-// States
 abstract class ImageState {}
 
 class PickedImageState extends ImageState {
@@ -23,7 +24,6 @@ class PickedImageState extends ImageState {
   PickedImageState(this.image);
 }
 
-// BLoC
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
   final ImageRepository imageRepository;
 

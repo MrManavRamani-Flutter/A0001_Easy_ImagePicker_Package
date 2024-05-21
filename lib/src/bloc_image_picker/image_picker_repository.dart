@@ -1,4 +1,4 @@
-import 'dart:developer';
+// lib/src/bloc_image_picker/image_picker_repository.dart
 
 import 'package:image_picker/image_picker.dart';
 
@@ -11,7 +11,7 @@ class ImageRepository {
       return pickedFile;
     } catch (e) {
       // Handle error
-      log('Error picking image: $e');
+      print('Error picking image: $e');
       return null;
     }
   }
