@@ -1,13 +1,9 @@
-// lib/src/bloc/image_picker_bloc.dart
-
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../bloc_image_picker/image_picker_repository.dart';
-import '../bloc_image_picker/picked_image.dart';
-
+// Events
 abstract class ImageEvent {}
 
 class PickImageEvent extends ImageEvent {
@@ -16,25 +12,25 @@ class PickImageEvent extends ImageEvent {
   PickImageEvent(this.source);
 }
 
+// States
 abstract class ImageState {}
 
 class PickedImageState extends ImageState {
-  final ImageModel image;
+  final String? imagePath;
 
-  PickedImageState(this.image);
+  PickedImageState(this.imagePath);
 }
 
+// BLoC
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
-  final ImageRepository imageRepository;
-
-  ImageBloc(this.imageRepository)
-      : super(PickedImageState(ImageModel(pathString: '')));
+  ImageBloc() : super(PickedImageState(null));
 
   Stream<ImageState> mapEventToState(ImageEvent event) async* {
     if (event is PickImageEvent) {
-      final XFile? pickedFile = await imageRepository.pickImage(event.source);
+      final XFile? pickedFile =
+          await ImagePicker().pickImage(source: event.source);
       if (pickedFile != null) {
-        yield PickedImageState(ImageModel.fromXFile(pickedFile));
+        yield PickedImageState(pickedFile.path);
       }
     }
   }
