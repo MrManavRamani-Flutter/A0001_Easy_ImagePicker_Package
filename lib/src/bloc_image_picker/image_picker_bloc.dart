@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../a0001_easy_image_picker.dart';
-import 'image_picker_repository.dart';
 
 // Events
 abstract class ImageEvent {}
