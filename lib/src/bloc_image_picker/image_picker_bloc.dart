@@ -1,37 +1,35 @@
-import 'dart:async';
+import 'dart:io';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
-// Events
-abstract class ImageEvent {}
+import 'image_picker_event.dart';
+import 'image_picker_state.dart';
 
-class PickImageEvent extends ImageEvent {
-  final ImageSource source;
+class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickerState> {
+  final ImagePicker _imagePicker = ImagePicker();
 
-  PickImageEvent(this.source);
-}
+  ImagePickerBloc() : super(ImagePickerInitial()) {
+    on<PickImageEvent>(_onPickImage);
+  }
 
-// States
-abstract class ImageState {}
-
-class PickedImageState extends ImageState {
-  final String? imagePath;
-
-  PickedImageState(this.imagePath);
-}
-
-// BLoC
-class ImageBloc extends Bloc<ImageEvent, ImageState> {
-  ImageBloc() : super(PickedImageState(null));
-
-  Stream<ImageState> mapEventToState(ImageEvent event) async* {
-    if (event is PickImageEvent) {
-      final XFile? pickedFile =
-          await ImagePicker().pickImage(source: event.source);
+  Future<void> _onPickImage(
+      PickImageEvent event, Emitter<ImagePickerState> emit) async {
+    emit(ImagePickerLoading());
+    try {
+      final pickedFile = await _imagePicker.pickImage(source: event.source);
       if (pickedFile != null) {
-        yield PickedImageState(pickedFile.path);
+        emit(ImagePickerLoaded(File(pickedFile.path)));
+      } else {
+        emit(ImagePickerError("No image selected"));
+        Fluttertoast.showToast(
+            msg: "No image selected", toastLength: Toast.LENGTH_SHORT);
       }
+    } catch (e) {
+      emit(ImagePickerError(e.toString()));
+      Fluttertoast.showToast(
+          msg: "Error: ${e.toString()}", toastLength: Toast.LENGTH_SHORT);
     }
   }
 }
