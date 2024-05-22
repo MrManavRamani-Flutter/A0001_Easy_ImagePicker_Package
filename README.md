@@ -596,4 +596,4 @@ class HomeScreen extends StatelessWidget {
 
 ```
 
-### This guide walks you through setting up your Flutter app to use the a0001_easy_image_picker package with BLoC for picking images. It includes the necessary steps and the complete code example.
+#### This guide walks you through setting up your Flutter app to use the a0001_easy_image_picker package with BLoC for picking images. It includes the necessary steps and the complete code example.
