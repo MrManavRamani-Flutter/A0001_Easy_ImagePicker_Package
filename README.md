@@ -336,3 +336,264 @@ class MyHomeScreen extends StatelessWidget {
 <string>We need access to your photo library to select pictures</string>
 
 ```
+
+
+# Image Picker Example with BLoC
+
+This is a Flutter example app demonstrating image picking functionality using the BLoC pattern with the `a0001_easy_image_picker` package.
+
+## Features
+
+- Pick images from the gallery
+- Capture images using the camera
+- Handle loading and error states
+- Toast notifications for errors
+
+## Installation
+
+Add the following dependencies to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  image_picker: ^1.1.1
+  flutter_bloc: ^8.1.5
+  a0001_easy_image_picker:
+    git:
+      url: https://github.com/MrManavRamani-Flutter/A0001_Easy_ImagePicker_Package.git
+      ref: master
+```
+
+## Usage
+Follow the example below to use the a0001_easy_image_picker package in your Flutter app.
+
+### Step 1: Add the Package to pubspec.yaml
+In the pubspec.yaml of your Flutter app, add the a0001_easy_image_picker package dependency.
+
+### Step 2: Create the Main Application
+Create the main application file, lib/main.dart, to set up the BLoC provider and the home screen.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:a0001_easy_image_picker/a0001_easy_image_picker.dart';
+import 'views/screen/home_screen.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Image Picker',
+      home: BlocProvider(
+        create: (context) => ImagePickerBloc(),
+        child: const HomeScreen(),
+      ),
+    );
+  }
+}
+
+```
+
+### Step 3: Create the Home Screen
+Create a new file, lib/views/screen/home_screen.dart, and define the UI for the home screen where users can interact with the image picker functionality.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:a0001_easy_image_picker/a0001_easy_image_picker.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Image Picker with BLoC")),
+      body: Center(
+        child: BlocBuilder<ImagePickerBloc, ImagePickerState>(
+          builder: (context, state) {
+            if (state is ImagePickerInitial) {
+              return const Text("No image selected");
+            } else if (state is ImagePickerLoading) {
+              return const CircularProgressIndicator();
+            } else if (state is ImagePickerLoaded) {
+              return Image.file(state.image);
+            } else if (state is ImagePickerError) {
+              return Text("Error: ${state.message}");
+            }
+            return Container();
+          },
+        ),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              BlocProvider.of<ImagePickerBloc>(context)
+                  .add(PickImageEvent(ImageSource.camera));
+            },
+            tooltip: 'Pick Image from Camera',
+            child: const Icon(Icons.camera),
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: () {
+              BlocProvider.of<ImagePickerBloc>(context)
+                  .add(PickImageEvent(ImageSource.gallery));
+            },
+            tooltip: 'Pick Image from Gallery',
+            child: const Icon(Icons.photo),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+```
+
+### Step 4: Run the Application
+#### Run your Flutter application:
+
+```shell
+flutter run
+
+```
+
+#### This will start your app, and you will see a screen with two floating action buttons: one for picking an image from the camera and another for picking an image from the gallery.
+
+
+## Full Example
+#### Here is the complete code for a Flutter app using the a0001_easy_image_picker package.
+
+#### pubspec.yaml
+
+```yaml
+name: image_picker_example
+description: A Flutter example app to demonstrate image picking using BLoC.
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  image_picker: ^1.1.1
+  flutter_bloc: ^8.1.5
+  a0001_easy_image_picker:
+    git:
+      url: https://github.com/MrManavRamani-Flutter/A0001_Easy_ImagePicker_Package.git
+      ref: master
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+```
+
+#### lib/main.dart
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:a0001_easy_image_picker/a0001_easy_image_picker.dart';
+import 'views/screen/home_screen.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Image Picker',
+      home: BlocProvider(
+        create: (context) => ImagePickerBloc(),
+        child: const HomeScreen(),
+      ),
+    );
+  }
+}
+
+```
+
+#### lib/views/screen/home_screen.dart
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:a0001_easy_image_picker/a0001_easy_image_picker.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Image Picker with BLoC")),
+      body: Center(
+        child: BlocBuilder<ImagePickerBloc, ImagePickerState>(
+          builder: (context, state) {
+            if (state is ImagePickerInitial) {
+              return const Text("No image selected");
+            } else if (state is ImagePickerLoading) {
+              return const CircularProgressIndicator();
+            } else if (state is ImagePickerLoaded) {
+              return Image.file(state.image);
+            } else if (state is ImagePickerError) {
+              return Text("Error: ${state.message}");
+            }
+            return Container();
+          },
+        ),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              BlocProvider.of<ImagePickerBloc>(context)
+                  .add(PickImageEvent(ImageSource.camera));
+            },
+            tooltip: 'Pick Image from Camera',
+            child: const Icon(Icons.camera),
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: () {
+              BlocProvider.of<ImagePickerBloc>(context)
+                  .add(PickImageEvent(ImageSource.gallery));
+            },
+            tooltip: 'Pick Image from Gallery',
+            child: const Icon(Icons.photo),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+```
+
+### This guide walks you through setting up your Flutter app to use the a0001_easy_image_picker package with BLoC for picking images. It includes the necessary steps and the complete code example.
